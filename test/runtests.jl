@@ -5,6 +5,12 @@ function run_all_tests()
     @testset "ini" begin
         include("test_ini.jl")
     end
+    @testset "arrow" begin
+        include("test_arrow.jl")
+    end
+    @testset "labels" begin
+        include("test_labels.jl")
+    end
 end
 
 # This is copied directly from Luxor.

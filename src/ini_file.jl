@@ -7,7 +7,11 @@ function get_config_value(sect::String, key::String)
     fnam = _get_ini_fnam()
     ini = read(Inifile(), fnam)
     if sect ∉ keys(sections(ini))
-        throw(ArgumentError("$sect not a section in $fnam. These are: $(keys(sections(ini)))"))
+        msg = """$sect not a section in $fnam. 
+        The existing are: $(keys(sections(ini))).
+        If you delete the .ini file above, a new template will be generated.
+        """
+        throw(ArgumentError(msg))
     end
     s = get(ini, sect, key,  "")
     if s == ""
@@ -27,7 +31,7 @@ function get_config_value(sect::String, key::String)
     end
     s
 end
-
+get_config_value(sect, key, type) = tryparse(type, get_config_value(sect, key))
 
 "Get an existing, readable ini file name, create it if necessary"
 function _get_ini_fnam()
@@ -51,11 +55,11 @@ function _prepare_init_file_configuration(io)
         #
         # Some values are given as a mulitiplier of these constants:
         #
-        # FS = 37.5
+        # FS = $FS
         # Font size FS for Luxor, corresponding to Word points.
         #
         #
-        # EM = 44    
+        # EM = $EM    
         # The unit EM, as in .css, corresponds to text + margins above and below
         #
         #
@@ -63,21 +67,42 @@ function _prepare_init_file_configuration(io)
         # Text position is given from the baseline, but text extends below that.
         # 
         #
-        # PT = 4
+        # PT = $PT
         # Line thickness, points
         #
         """
+    println(io, msg)
     #
     conta = Inifile()
-    set(conta, "Location axis", "Direction along [deg]", 0.0)
+    # Lines in arbitrary order from file
+    set(conta, "Location axis", "Pro text size [FS]", 1)
+    set(conta, "Location axis", "Pro font face", "JuliaMono")
+    set(conta, "Location axis", "Toy text size [FS]", 1)
+    set(conta, "Location axis", "Toy font face", "JuliaMono")
     set(conta, "Location axis", "Line width [PT]", 1)
     set(conta, "Location axis", "Arrow head angle [deg]", 15)
     set(conta, "Location axis", "Arrow length [EM]", 1)
-    set(conta, "Location axis", "Toy text size [FS]", 1)
-    set(conta, "Location axis", "Toy font face", "JuliaMono")
-    set(conta, "Location axis", "Pro text size [FS]", 1)
-    set(conta, "Location axis", "Pro font face", "JuliaMono")
-    set(conta, "Time axis", "Direction along", 1)
-    set(conta, "Time axis", "key1", 1)
+    set(conta, "Location axis", "Direction along [deg]", 0.0)
+    set(conta, "Location axis", "Labels offset y [EM]", -1)
+    set(conta, "Location axis", "Labels offset x [EM]", 0)
+    #
+    set(conta, "Time axis", "Pro text size [FS]", 1)
+    set(conta, "Time axis", "Pro font face", "JuliaMono")
+    set(conta, "Time axis", "Toy text size [FS]", 1)
+    set(conta, "Time axis", "Toy font face", "JuliaMono")
+    set(conta, "Time axis", "Line width [PT]", 1)
+    set(conta, "Time axis", "Arrow head angle [deg]", 15)
+    set(conta, "Time axis", "Arrow length [EM]", 1)
+    set(conta, "Time axis", "Direction along [deg]", 90.0)
+    set(conta, "Time axis", "Labels offset y [EM]", 0)
+    set(conta, "Time axis", "Labels offset x [EM]", -1)
+    #
+    set(conta, "Default label", "Pri 1 X11 color", "black")
+    set(conta, "Default label", "Pri 2 X11 color", "brown")
+    set(conta, "Default label", "Pri 3 X11 color", "chocolate")
+
+
+
+    set(conta, "Canvas", "Width", 1889)
     println(io, conta)
 end
