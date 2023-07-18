@@ -85,6 +85,10 @@ function _prepare_init_file_configuration(io)
     set(conta, "Location axis", "Direction along [deg]", 0.0)
     set(conta, "Location axis", "Labels offset y [EM]", -1)
     set(conta, "Location axis", "Labels offset x [EM]", 0)
+    set(conta, "Location axis", "Labels rotation from device direction [deg]", -60)
+    set(conta, "Location axis", "Include label leaders to axis (true / false)", "true")
+    set(conta, "Location axis", "Label anchor side (left / right)", "left")
+
     #
     set(conta, "Time axis", "Pro text size [FS]", 1)
     set(conta, "Time axis", "Pro font face", "JuliaMono")
@@ -96,13 +100,17 @@ function _prepare_init_file_configuration(io)
     set(conta, "Time axis", "Direction along [deg]", 90.0)
     set(conta, "Time axis", "Labels offset y [EM]", 0)
     set(conta, "Time axis", "Labels offset x [EM]", -1)
+    set(conta, "Time axis", "Labels rotation from device direction [deg]", 30)
+    set(conta, "Time axis", "Include label leaders to axis (true / false)", "false")
+    set(conta, "Time axis", "Label anchor side (left / right)", "right")
     #
     set(conta, "Default label", "Pri 1 X11 color", "black")
     set(conta, "Default label", "Pri 2 X11 color", "brown")
     set(conta, "Default label", "Pri 3 X11 color", "chocolate")
 
-
-
     set(conta, "Canvas", "Width", 1889)
+    set(conta, "Label leaders", "Width [PT]", 0.5)
+    set(conta, "Label leaders", "Color", "black")
+
     println(io, conta)
 end

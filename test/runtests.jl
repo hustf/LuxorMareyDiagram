@@ -11,6 +11,9 @@ function run_all_tests()
     @testset "labels" begin
         include("test_labels.jl")
     end
+    @testset "labels long" begin
+        include("test_labels_long.jl")
+    end
 end
 
 # This is copied directly from Luxor.
